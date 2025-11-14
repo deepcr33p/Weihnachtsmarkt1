@@ -22,8 +22,23 @@
     }
     h1 {
       font-size: 1.5em;
-      margin-bottom: 20px;
+      margin-bottom: 10px;
       color: #d32f2f;
+    }
+    .name-input {
+      margin-bottom: 15px;
+      font-size: 1.1em;
+    }
+    .name-input label {
+      font-weight: bold;
+      margin-right: 10px;
+    }
+    .name-input input {
+      padding: 8px;
+      width: 200px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+      font-size: 1em;
     }
     table {
       width: 100%;
@@ -40,11 +55,11 @@
       background-color: #f0f0f0;
       width: 50px;
     }
-    td input {
-      width: 100%;
-      border: none;
-      padding: 4px;
-      font-size: 14px;
+    td[contenteditable="true"] {
+      min-height: 20px;
+    }
+    .highlight {
+      background-color: #ffebee !important;
     }
     .note {
       text-align: left;
@@ -72,15 +87,18 @@
     button:hover {
       background: #b71c1c;
     }
-    .highlight {
-      background-color: #ffebee !important;
-    }
   </style>
 </head>
 <body>
 
 <div class="container" id="capture">
   <h1>Weihnachtsmarkt Fürth</h1>
+
+  <!-- NEU: Namensfeld -->
+  <div class="name-input">
+    <label for="userName">Name:</label>
+    <input type="text" id="userName" placeholder="z. B. Max Mustermann" />
+  </div>
 
   <table id="timetable">
     <tr><th>Do</th><td>27. 11.</td><td contenteditable="true" class="editable"></td></tr>
@@ -120,23 +138,21 @@
   </div>
 </div>
 
-<button onclick="downloadImage()">📸 Als Bild speichern</button>
+<button onclick="downloadImage()">Als Bild speichern</button>
 
 <script>
-  // Fokus beim Klicken in Zellen
-  document.querySelectorAll('.editable').forEach(cell => {
-    cell.addEventListener('click', function() {
-      if (this.innerText.trim() === '') {
-        this.focus();
-      }
-    });
+  // Name wird automatisch aktualisiert
+  const nameInput = document.getElementById('userName');
+  nameInput.addEventListener('input', function() {
+    // Optional: Name live anzeigen (falls du willst)
+    // Hier bleibt er nur im Input + im Bild
   });
 
   // Bild herunterladen
   function downloadImage() {
     const element = document.getElementById('capture');
     const button = document.querySelector('button');
-    button.style.display = 'none'; // Button ausblenden
+    button.style.display = 'none';
 
     html2canvas(element, {
       scale: 2,
@@ -144,15 +160,23 @@
       backgroundColor: '#ffffff'
     }).then(canvas => {
       const link = document.createElement('a');
-      link.download = 'Weihnachtsmarkt_Fürth_Einsatzplan.png';
+      const name = nameInput.value.trim() || 'Einsatzplan';
+      link.download = `Weihnachtsmarkt_Fürth_${name.replace(/\s+/g, '_')}.png`;
       link.href = canvas.toDataURL('image/png');
       link.click();
-      button.style.display = 'block'; // Button wieder anzeigen
+      button.style.display = 'block';
     }).catch(err => {
       alert('Fehler beim Erstellen des Bildes: ' + err);
       button.style.display = 'block';
     });
   }
+
+  // Fokus bei Klick in Zellen
+  document.querySelectorAll('.editable').forEach(cell => {
+    cell.addEventListener('click', function() {
+      if (this.innerText.trim() === '') this.focus();
+    });
+  });
 </script>
 
 </body>

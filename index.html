@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weihnachtsmarkt Fürth - Einsatzplan</title>
+  <script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f4f4;
+      padding: 20px;
+      text-align: center;
+    }
+    .container {
+      max-width: 500px;
+      margin: 0 auto;
+      background: white;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 0 10px rgba(0,0,0,0.1);
+    }
+    h1 {
+      font-size: 1.5em;
+      margin-bottom: 20px;
+      color: #d32f2f;
+    }
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      margin-bottom: 20px;
+    }
+    th, td {
+      border: 1px solid #ccc;
+      padding: 8px;
+      text-align: left;
+      font-size: 14px;
+    }
+    th {
+      background-color: #f0f0f0;
+      width: 50px;
+    }
+    td input {
+      width: 100%;
+      border: none;
+      padding: 4px;
+      font-size: 14px;
+    }
+    .note {
+      text-align: left;
+      margin-top: 20px;
+      font-size: 14px;
+      color: #555;
+    }
+    .note input, .note textarea {
+      width: 100%;
+      padding: 8px;
+      margin-top: 5px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+    button {
+      margin-top: 20px;
+      padding: 12px 24px;
+      font-size: 16px;
+      background: #d32f2f;
+      color: white;
+      border: none;
+      border-radius: 6px;
+      cursor: pointer;
+    }
+    button:hover {
+      background: #b71c1c;
+    }
+    .highlight {
+      background-color: #ffebee !important;
+    }
+  </style>
+</head>
+<body>
+
+<div class="container" id="capture">
+  <h1>Weihnachtsmarkt Fürth</h1>
+
+  <table id="timetable">
+    <tr><th>Do</th><td>27. 11.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Fr</th><td>28. 11.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>Sa</th><td>29. 11.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>So</th><td>30. 11.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mo</th><td>01. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Di</th><td>02. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mi</th><td>03. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Do</th><td>04. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Fr</th><td>05. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>Sa</th><td>06. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>So</th><td>07. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mo</th><td>08. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Di</th><td>09. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mi</th><td>10. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Do</th><td>11. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Fr</th><td>12. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>Sa</th><td>13. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>So</th><td>14. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mo</th><td>15. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Di</th><td>16. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mi</th><td>17. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Do</th><td>18. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Fr</th><td>19. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Sa</th><td>20. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr class="highlight"><th>So</th><td>21. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Mo</th><td>22. 12.</td><td contenteditable="true" class="editable"></td></tr>
+    <tr><th>Di</th><td>23. 12.</td><td contenteditable="true" class="editable"></td></tr>
+  </table>
+
+  <div class="note">
+    <p><strong>bitte eintragen:</strong><br>
+    Wenn Du an diesem Tag egal wann Arbeiten kannst: <em>ja</em><br>
+    Wenn Du an diesem Tag nur zu bestimmten Zeiten arbeiten kannst, dann z. B. <em>ab 16 Uhr</em></p>
+    <p><strong>Sonstiges:</strong> z. B. nicht mehr als <input type="text" placeholder="... Stunden pro Woche" /></p>
+  </div>
+</div>
+
+<button onclick="downloadImage()">📸 Als Bild speichern</button>
+
+<script>
+  // Fokus beim Klicken in Zellen
+  document.querySelectorAll('.editable').forEach(cell => {
+    cell.addEventListener('click', function() {
+      if (this.innerText.trim() === '') {
+        this.focus();
+      }
+    });
+  });
+
+  // Bild herunterladen
+  function downloadImage() {
+    const element = document.getElementById('capture');
+    const button = document.querySelector('button');
+    button.style.display = 'none'; // Button ausblenden
+
+    html2canvas(element, {
+      scale: 2,
+      useCORS: true,
+      backgroundColor: '#ffffff'
+    }).then(canvas => {
+      const link = document.createElement('a');
+      link.download = 'Weihnachtsmarkt_Fürth_Einsatzplan.png';
+      link.href = canvas.toDataURL('image/png');
+      link.click();
+      button.style.display = 'block'; // Button wieder anzeigen
+    }).catch(err => {
+      alert('Fehler beim Erstellen des Bildes: ' + err);
+      button.style.display = 'block';
+    });
+  }
+</script>
+
+</body>
+</html>
